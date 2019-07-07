@@ -1,0 +1,2 @@
+set -U SHAPESHIFT_PROMPT_LEFT_ELEMENTS prompt_dir prompt_arrow
+set -U SHAPESHIFT_PROMPT_RIGHT_ELEMENTS async_git_branch
