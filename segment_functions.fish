@@ -1,6 +1,6 @@
 
 function async_git_branch
-  sleep 0.5;
+  sleep 2;
   echo (set_color white)(git branch ^/dev/null | grep \* | sed 's/* //')(set_color normal)
 end
 
