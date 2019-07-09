@@ -22,7 +22,7 @@ function map
       set -U $valuez[1][$index] "$value"
     else
       set -a -U $keyz $key
-      set -a -U $valuez "$value"
+      set -a -U $valuez ""$value""
     end
   end
 end
