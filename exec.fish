@@ -1,17 +1,6 @@
 map jobs
 map outputs
 
-function __asyncJob
-  set -l func $argv[1]
-  set -l caller $argv[2]
-
-  set -l mapFunctionBody (__bodyOf map)
-  set -l functionBody (__bodyOf $func)
-  set -l behaviour "map outputs $func ($func); kill -WINCH $caller;"
-
-  fish -c "$mapFunctionBody; $functionBody; $behaviour" &
-end
-
 function execAsync
   set -l func $argv[1]
   set -l outputVar $argv[2]
@@ -38,6 +27,17 @@ end
 
 function resetResults
   map outputs
+end
+
+function __asyncJob
+  set -l func $argv[1]
+  set -l caller $argv[2]
+
+  set -l mapFunctionBody (__bodyOf map)
+  set -l functionBody (__bodyOf $func)
+  set -l behaviour "map outputs $func ($func); kill -WINCH $caller;"
+
+  fish -c "$mapFunctionBody; $functionBody; $behaviour" &
 end
 
 function __bodyOf

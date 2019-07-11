@@ -15,7 +15,7 @@ function preexec --on-event fish_postexec
 
   for segment in $SHAPESHIFT_PROMPT_LEFT_ELEMENTS $SHAPESHIFT_PROMPT_RIGHT_ELEMENTS
     if test (echo $segment | grep '^async_')
-      execAsync $segment
+      execAsync (echo $segment | sed 's/^async_//')
     else
       execSync $segment
     end
@@ -24,7 +24,7 @@ end
 
 function fish_prompt
     for segment in $SHAPESHIFT_PROMPT_LEFT_ELEMENTS
-        set -l updated (resultFor $segment)
+        set -l updated (__obtainValueOf $segment)
 
         if test $updated != ""
           printf "$updated "
@@ -34,12 +34,18 @@ end
 
 function fish_right_prompt
     for segment in $SHAPESHIFT_PROMPT_RIGHT_ELEMENTS
-      set -l updated (resultFor $segment)
+      set -l updated (__obtainValueOf $segment)
 
       if test $updated != ""
         printf " $updated"
       end
     end
+end
+
+function __obtainValueOf
+  set -l segment $argv[1]
+  set -l originalSegment (echo $segment | sed 's/^async_//')
+  echo (resultFor $originalSegment)
 end
 
 preexec
